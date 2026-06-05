@@ -1,10 +1,14 @@
-import { useState } from 'react'
-import './index.css'
+import "./index.css";
+import { LandingPage } from "./pages/LandingPage";
+import { Navbar } from "./ui/Navbar";
 
 function App() {
   return (
-   <h1 className='font-bold'>React!</h1>
-  )
+  <div className="min-h-screen flex flex-col">
+    <Navbar />
+    <LandingPage />
+  </div>
+);
 }
 
-export default App
+export default App;
