@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+console.log('AQI KEY:', import.meta.env.VITE_WAQI_TOKEN);
+
 const token = import.meta.env.VITE_WAQI_TOKEN;
 
 const useAQI = (coords) => {
