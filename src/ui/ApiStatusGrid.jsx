@@ -1,107 +1,133 @@
-const cards = [
-  {
-    id: 1,
-    label: "API One",
-    description: "Short description",
-    status: "online",
-    detail: "Connected successfully",
-  },
-  {
-    id: 2,
-    label: "API Two",
-    description: "Short description",
-    status: "loading",
-    detail: "Fetching data…",
-  },
-  {
-    id: 3,
-    label: "API Three",
-    description: "Short description",
-    status: "error",
-    detail: "Unable to reach endpoint",
-  },
-];
+import useAQI from "../hooks/getAQI";
+import useWeather from "../hooks/getWeather";
 
-const statusMap = {
-  online:  { dot: "bg-[#aff228]",  pulse: false, label: "Online",    labelCls: "text-[#aff228]",  border: "border-[#aff228]/20", glow: "shadow-[0_0_40px_rgba(175,242,40,0.05)]" },
-  loading: { dot: "bg-amber-400",  pulse: true,  label: "Fetching…", labelCls: "text-amber-400",  border: "border-amber-400/20", glow: "" },
-  error:   { dot: "bg-red-500",    pulse: false, label: "Error",     labelCls: "text-red-400",    border: "border-red-500/20",  glow: "shadow-[0_0_40px_rgba(239,68,68,0.06)]" },
-  idle:    { dot: "bg-white/20",   pulse: false, label: "Idle",      labelCls: "text-white/30",   border: "border-white/8",     glow: "" },
-};
-
-function StatusDot({ status }) {
-  const { dot, pulse } = statusMap[status] ?? statusMap.idle;
-  return (
-    <span className="relative flex h-2.5 w-2.5 shrink-0">
-      {pulse && <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${dot} opacity-60`} />}
-      <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${dot}`} />
-    </span>
-  );
+function getAQIInfo(aqi) {
+  if (aqi <= 50)  return { label: "Good",      color: "#aff228", advice: "Safe to run outdoors" };
+  if (aqi <= 100) return { label: "Moderate",  color: "#f5c518", advice: "Caution for sensitive runners" };
+  if (aqi <= 150) return { label: "Sensitive", color: "#ff8c00", advice: "Limit outdoor exercise" };
+  if (aqi <= 200) return { label: "Unhealthy", color: "#ff4444", advice: "Avoid outdoor running" };
+  return                  { label: "Hazardous",color: "#c084fc", advice: "Stay indoors" };
 }
 
-function ApiCard({ card, index }) {
-  const { label, labelCls, border, glow } = statusMap[card.status] ?? statusMap.idle;
+function getWeatherDesc(code) {
+  if (code === 0) return "Clear sky";
+  if (code <= 3)  return "Partly cloudy";
+  if (code <= 48) return "Foggy";
+  if (code <= 55) return "Drizzle";
+  if (code <= 65) return "Rainy";
+  if (code <= 77) return "Snowy";
+  if (code <= 82) return "Rain showers";
+  if (code <= 99) return "Thunderstorm";
+  return "Unknown";
+}
 
+const WindIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
+    <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
+    <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
+  </svg>
+);
+
+const ThermIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+  </svg>
+);
+
+const CloudIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z" />
+    <line x1="11" y1="13" x2="11" y2="17" />
+    <line x1="8"  y1="13" x2="8"  y2="17" />
+    <line x1="14" y1="13" x2="14" y2="17" />
+  </svg>
+);
+
+function Col({ icon, iconColor, label, sub, children }) {
   return (
-    <div
-      className={`relative flex flex-col bg-white/[0.025] border rounded-xl p-4 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/15 ${border} ${glow}`}
-    >
-      {/* Index */}
-      <span className="absolute top-3.5 right-3.5 font-syne text-[0.625rem] font-bold text-white/10 tracking-[0.2em]">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-
-      {/* Header */}
-      <div className="flex items-start gap-2.5 mb-3">
-        <div className="mt-0.5">
-          <StatusDot status={card.status} />
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <h3 className="font-syne font-bold text-white text-sm leading-tight tracking-[-0.02em]">
-            {card.label}
-          </h3>
-          <p className="font-dm text-[0.7rem] text-white/35 leading-snug">
-            {card.description}
-          </p>
-        </div>
-      </div>
-
-      {/* Divider + status label */}
-      <div className="flex items-center gap-2 mb-3 pb-3 border-b border-white/6">
-        <span className={`font-dm text-[0.625rem] font-semibold tracking-[0.15em] uppercase ${labelCls}`}>
+    <div className="flex-1 flex items-center gap-3 px-6 py-4">
+      <span className="shrink-0 opacity-75" style={{ color: iconColor }}>{icon}</span>
+      <div className="min-w-0">
+        <p className="font-dm text-[0.6rem] font-semibold tracking-[0.18em] text-white/30 uppercase mb-0.5">
           {label}
-        </span>
+        </p>
+        <div className="flex items-center gap-2 mb-0.5">{children}</div>
+        <p className="font-dm text-[0.65rem] text-white/28 truncate">{sub}</p>
       </div>
-
-      {/* Detail */}
-      <p className="font-dm text-[0.7rem] text-white/30 leading-relaxed flex-1">
-        {card.detail}
-      </p>
     </div>
   );
 }
 
 export function ApiStatusGrid() {
-  return (
-    <section className="w-full max-w-7xl mx-auto px-8 md:px-16 py-12">
-      <div className="flex items-center gap-3 mb-3">
-        <span className="block w-5 h-px bg-[#aff228]" />
-        <span className="font-dm text-[0.6875rem] font-semibold tracking-[0.22em] text-[#aff228] uppercase">
-          System Status
-        </span>
-      </div>
-      <h2 className="font-syne font-bold text-white text-[clamp(1.75rem,3vw,2.5rem)] tracking-[-0.03em] leading-tight mb-2">
-        API Connections
-      </h2>
-      <p className="font-dm text-white/35 text-sm mb-6">
-        Live status for each integrated data source.
-      </p>
+  const { data: aqi,     loading: aqiLoading     } = useAQI();
+  const { data: weather, loading: weatherLoading } = useWeather();
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cards.map((card, i) => (
-          <ApiCard key={card.id} card={card} index={i} />
-        ))}
+  const aqiInfo = aqi ? getAQIInfo(aqi.aqi) : null;
+
+  return (
+    <div className="w-full border-t border-white/5">
+      <div className="max-w-7xl mx-auto flex divide-x divide-white/5">
+
+        {/* Air Quality */}
+        <Col
+          icon={<WindIcon />}
+          iconColor={aqiInfo?.color ?? "#aff228"}
+          label="Air Quality"
+          sub={aqiLoading ? "Fetching…" : (aqiInfo?.advice ?? "—")}
+        >
+          {aqiLoading ? (
+            <span className="font-syne font-bold text-white/20 text-sm animate-pulse">AQI —</span>
+          ) : (
+            <>
+              <span className="font-syne font-bold text-white text-sm tracking-[-0.02em]">
+                AQI {aqi?.aqi}
+              </span>
+              {aqiInfo && (
+                <span
+                  className="font-dm text-[0.6rem] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-full"
+                  style={{ color: aqiInfo.color, background: aqiInfo.color + "22" }}
+                >
+                  {aqiInfo.label}
+                </span>
+              )}
+            </>
+          )}
+        </Col>
+
+        {/* Temperature */}
+        <Col
+          icon={<ThermIcon />}
+          iconColor="#f97316"
+          label="Temperature"
+          sub={weatherLoading ? "Fetching…" : (weather ? `Feels like ${weather.feelsLike}°C` : "—")}
+        >
+          {weatherLoading ? (
+            <span className="font-syne font-bold text-white/20 text-sm animate-pulse">—°C</span>
+          ) : (
+            <span className="font-syne font-bold text-white text-sm tracking-[-0.02em]">
+              {weather?.temp ?? "—"}°C
+            </span>
+          )}
+        </Col>
+
+        {/* Weather */}
+        <Col
+          icon={<CloudIcon />}
+          iconColor="#60a5fa"
+          label="Weather"
+          sub={weatherLoading ? "Fetching…" : (weather ? `${weather.rainChance}% rain · Wind ${weather.windSpeed} km/h` : "—")}
+        >
+          {weatherLoading ? (
+            <span className="font-syne font-bold text-white/20 text-sm animate-pulse">—</span>
+          ) : (
+            <span className="font-syne font-bold text-white text-sm tracking-[-0.02em]">
+              {weather ? getWeatherDesc(weather.weatherCode) : "—"}
+            </span>
+          )}
+        </Col>
+
       </div>
-    </section>
+    </div>
   );
 }
