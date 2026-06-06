@@ -14,33 +14,33 @@ function GitHubIcon() {
 
 export function Footer() {
   return (
-    <footer className="w-full bg-black border-t border-white/8">
+    <footer className="w-full bg-black border-t border-white/6">
       <div className="max-w-7xl mx-auto px-8 md:px-16 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8">
 
           {/* Left — logo + tagline */}
-          <div className="flex flex-col gap-2">
-            <a href="/" className="flex items-center gap-2.5 no-underline w-fit">
-              <img src="/favicon1.png" alt="Paso logo" className="h-7 w-7 rounded-[5px]" />
-              <span className="font-syne text-[1.3rem] font-bold text-white tracking-[-0.03em] leading-none">
+          <div className="flex flex-col gap-3">
+            <a href="/" className="flex items-center gap-2.5 no-underline w-fit group">
+              <img src="/favicon1.png" alt="Paso logo" className="h-8 w-8 rounded-lg" />
+              <span className="font-syne text-[1.2rem] font-bold text-white tracking-[-0.03em] leading-none">
                 Paso
               </span>
             </a>
-            <p className="font-dm text-sm text-white/35 leading-relaxed">
-              Discover Bangkok's best running routes.
+            <p className="font-dm text-sm text-white/32 leading-relaxed max-w-[16rem]">
+              Discover Bangkok's best running routes — for runners who know the city.
             </p>
           </div>
 
           {/* Middle — nav */}
           <div className="flex flex-col gap-3">
+            <span className="font-dm text-[0.6rem] font-semibold tracking-[0.2em] text-white/25 uppercase mb-1">
+              Links
+            </span>
             {NAV_LINKS.map(({ label, href }) => (
               <a
                 key={label}
                 href={href}
-                className="font-dm text-sm text-white/45 no-underline transition-colors duration-200 w-fit"
-                style={{ "--hover-color": "#1D9E75" }}
-                onMouseEnter={e => e.currentTarget.style.color = "#1D9E75"}
-                onMouseLeave={e => e.currentTarget.style.color = ""}
+                className="font-dm text-sm text-white/40 no-underline hover:text-[#aff228] transition-colors duration-200 w-fit"
               >
                 {label}
               </a>
@@ -49,22 +49,33 @@ export function Footer() {
 
           {/* Right — built by + GitHub */}
           <div className="flex flex-col items-start sm:items-end gap-3">
-            <p className="font-dm text-sm text-white/35">
-              Built by <span className="text-white/60">sirfranciscofrank</span>
+            <span className="font-dm text-[0.6rem] font-semibold tracking-[0.2em] text-white/25 uppercase">
+              Built by
+            </span>
+            <p className="font-syne font-bold text-white/50 text-sm tracking-[-0.01em]">
+              sirfranciscofrank
             </p>
             <a
               href="https://github.com/sirfranciscofrank"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub profile"
-              className="text-white/35 transition-colors duration-200"
-              onMouseEnter={e => e.currentTarget.style.color = "#1D9E75"}
-              onMouseLeave={e => e.currentTarget.style.color = ""}
+              className="text-white/30 hover:text-[#aff228] transition-colors duration-200"
             >
               <GitHubIcon />
             </a>
           </div>
 
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex items-center justify-between mt-10 pt-6 border-t border-white/5">
+          <p className="font-dm text-[0.7rem] text-white/18">
+            © 2025 Paso · Bangkok, Thailand
+          </p>
+          <p className="font-dm text-[0.7rem] text-white/18">
+            Building in public
+          </p>
         </div>
       </div>
     </footer>
