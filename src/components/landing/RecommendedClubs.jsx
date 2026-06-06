@@ -427,6 +427,7 @@ export function RecommendedClubs() {
 
   return (
     <section
+      id="communities"
       aria-labelledby="clubs-heading"
       className="relative overflow-hidden w-full bg-black border-t border-white/6"
     >
