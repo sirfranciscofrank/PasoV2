@@ -30,32 +30,27 @@ export function ParkCard({ park, index, onMouseEnter, onMouseLeave }) {
           </div>
         )}
 
-        {/* Gradient overlay — fades image into card bg */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent" />
-
         {/* Index badge */}
         <div className="absolute top-3.5 left-3.5 w-7 h-7 rounded-full bg-black/60 border border-[#aff228]/40 backdrop-blur-md flex items-center justify-center">
           <span className="font-dm text-[0.6rem] font-bold tracking-widest text-[#aff228]">
             {num}
           </span>
         </div>
-
-        {/* Name + location pinned to bottom of image */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 pt-10">
-          <p className="font-dm text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-white/45 mb-1">
-            {park.area} · {park.city}
-          </p>
-          <h3 className="font-syne font-bold text-white text-[1.15rem] leading-tight tracking-[-0.03em]">
-            {park.name}
-          </h3>
-        </div>
       </div>
 
       {/* Content */}
-      <div className="px-5 pt-3.5 pb-4 flex flex-col gap-3 flex-1">
+      <div className="px-5 pt-4 pb-5 flex flex-col flex-1">
+
+        {/* Location + name */}
+        <p className="font-dm text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-white/45">
+          {park.area} · {park.city}
+        </p>
+        <h3 className="font-syne font-bold text-white text-[1.15rem] leading-tight tracking-[-0.03em] mt-1.5">
+          {park.name}
+        </h3>
 
         {/* Run type + distance */}
-        <div className="flex flex-col gap-0.5">
+        <div className="mt-4 flex flex-col gap-0.5">
           <span className="font-dm text-[0.58rem] font-bold tracking-wider uppercase text-[#aff228]/70 line-clamp-1">
             {park.runType}
           </span>
@@ -68,7 +63,7 @@ export function ParkCard({ park, index, onMouseEnter, onMouseLeave }) {
 
         {/* Tags */}
         {park.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="mt-3.5 flex flex-wrap gap-1.5">
             {park.tags.map((tag) => (
               <span
                 key={tag}
@@ -86,7 +81,7 @@ export function ParkCard({ park, index, onMouseEnter, onMouseLeave }) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="mt-auto w-full flex items-center justify-center gap-1.5 font-dm text-[0.7rem] font-semibold text-white/40 border border-white/8 rounded-xl py-2.5 hover:text-[#aff228] hover:border-[#aff228]/25 hover:bg-[#aff228]/5 transition-all duration-200"
+          className="mt-5 w-full flex items-center justify-center gap-1.5 font-dm text-[0.7rem] font-semibold text-[#aff228] border border-[#aff228]/20 bg-[#aff228]/5 rounded-xl py-2.5 hover:bg-[#aff228] hover:text-black hover:border-[#aff228] transition-all duration-200"
         >
           <svg
             width="10" height="10"

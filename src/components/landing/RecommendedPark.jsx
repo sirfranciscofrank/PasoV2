@@ -6,8 +6,10 @@ export function RecommendedPark() {
   const [hoveredId, setHoveredId] = useState(null);
 
   return (
-    <section aria-labelledby="picks-heading" className="relative overflow-hidden w-full bg-black border-t border-white/6">
-
+    <section
+      aria-labelledby="picks-heading"
+      className="relative overflow-hidden w-full bg-black border-t border-white/6"
+    >
       {/* Park background images — fade between on hover */}
       {PARKS.filter((p) => p.img).map((park) => (
         <img
@@ -21,10 +23,9 @@ export function RecommendedPark() {
       ))}
 
       {/* Persistent dark overlay */}
-      <div className="absolute inset-0 bg-black/[0.88] pointer-events-none" />
+      <div className="absolute inset-0 bg-black/90 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 py-16 md:py-24">
-
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
@@ -38,10 +39,11 @@ export function RecommendedPark() {
               id="picks-heading"
               className="font-syne font-bold text-white text-2xl md:text-3xl tracking-[-0.03em] mb-1.5"
             >
-              Runs worth leaving home for
+              Find your next Bangkok run{" "}
             </h2>
             <p className="font-dm text-sm text-white/38">
-              Real routes around Bangkok — picked for comfort, scenery, and runability.
+              Runner-friendly parks and routes picked for comfort, scenery, and
+              easy movement.
             </p>
           </div>
           <a
@@ -53,7 +55,7 @@ export function RecommendedPark() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
           {PARKS.map((park, index) => (
             <ParkCard
               key={park.id}
@@ -72,7 +74,8 @@ export function RecommendedPark() {
               More Bangkok runs to explore
             </p>
             <p className="font-dm text-sm text-white/38 leading-relaxed">
-              Parks, riverside paths, and quiet streets — picked to help you choose where to run next.
+              Parks, riverside paths, and quiet streets — picked to help you
+              choose where to run next.
             </p>
           </div>
           <button
@@ -82,7 +85,6 @@ export function RecommendedPark() {
             Explore all routes →
           </button>
         </div>
-
       </div>
     </section>
   );

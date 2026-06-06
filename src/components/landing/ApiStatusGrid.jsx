@@ -249,10 +249,10 @@ function IdleBody({ onOpen }) {
       {/* Text */}
       <div className="flex-1 min-w-0">
         <p className="font-syne font-semibold text-white/75 text-[0.875rem] leading-tight mb-0.5 tracking-[-0.01em]">
-          Real-time run conditions
+          Check before you run
         </p>
         <p className="font-dm text-xs text-white/30 leading-relaxed">
-          AQI, temperature, UV index and your run score — live, for where you are.
+          AQI, temperature, UV, and a simple run score for your current area.
         </p>
       </div>
 

@@ -54,7 +54,7 @@ export function Hero() {
 
           {/* Subtext */}
           <p className="font-dm text-white/55 text-[0.9375rem] leading-relaxed mb-10 max-w-sm">
-            Discover routes, check real-time conditions, and find running communities across the city.
+            Find runner-friendly parks, simple route notes, local conditions, and running crews across the city.
           </p>
 
           {/* CTAs */}
@@ -71,6 +71,7 @@ export function Hero() {
 
             <button
               type="button"
+              onClick={() => document.getElementById("what-you-can-find")?.scrollIntoView({ behavior: "smooth" })}
               className="inline-flex items-center gap-2 border border-white/20 bg-white/5 text-white/65 hover:text-white hover:border-white/35 hover:bg-white/10 rounded-xl px-7 py-3.5 font-dm text-[0.8125rem] font-semibold whitespace-nowrap transition-all duration-200"
             >
               How it works
