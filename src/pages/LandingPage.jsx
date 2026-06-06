@@ -1,5 +1,6 @@
 import { Hero } from "../components/landing/Hero";
 import { ApiStatusGrid } from "../ui/ApiStatusGrid";
+import { RecommendedPark } from "../components/landing/RecommendedPark";
 
 export function LandingPage() {
   return (
@@ -11,6 +12,7 @@ export function LandingPage() {
         <section className="bg-black">
           <ApiStatusGrid />
         </section>
+        <RecommendedPark />
       </main>
     </>
   );
