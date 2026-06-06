@@ -4,7 +4,7 @@ import useWeather from "../hooks/getWeather";
 import { LocationConsent } from "./LocationConsent";
 import { computeRunScore, getRunScoreInfo, buildSummary } from "../hooks/getRunScore";
 
-const SKL = "animate-pulse rounded bg-white/[0.07] mx-auto";
+const SKL = "animate-pulse rounded-lg bg-white/[0.07] mx-auto";
 
 const RING_R = 34;
 const RING_CIRC = 2 * Math.PI * RING_R;
@@ -12,8 +12,8 @@ const RING_CIRC = 2 * Math.PI * RING_R;
 function Badge({ label, color }) {
   return (
     <span
-      className="font-dm text-[0.6rem] font-semibold tracking-[0.15em] uppercase px-2.5 py-0.5 rounded-full"
-      style={{ color, background: color + "1a" }}
+      className="font-dm text-[0.6rem] font-semibold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full"
+      style={{ color, background: color + "18" }}
     >
       {label}
     </span>
@@ -34,7 +34,7 @@ function ScoreRing({ score, color }) {
         cx="44" cy="44" r={RING_R}
         fill="none"
         stroke="rgba(255,255,255,0.07)"
-        strokeWidth="2.5"
+        strokeWidth="3"
         strokeLinecap="round"
       />
       {/* Progress arc */}
@@ -43,7 +43,7 @@ function ScoreRing({ score, color }) {
           cx="44" cy="44" r={RING_R}
           fill="none"
           stroke={color ?? "rgba(255,255,255,0.3)"}
-          strokeWidth="2.5"
+          strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray={`${filled} ${RING_CIRC}`}
           transform="rotate(-90 44 44)"
@@ -66,7 +66,7 @@ function RunScoreTooltip() {
         onMouseLeave={() => setOpen(false)}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        className="flex items-center justify-center w-3.5 h-3.5 rounded-full border border-white/18 text-white/30 hover:text-white/70 hover:border-white/40 font-dm text-[0.5rem] font-bold transition-all duration-200 cursor-default"
+        className="flex items-center justify-center w-4 h-4 rounded-full border border-white/15 text-white/30 hover:text-white/65 hover:border-white/35 font-dm text-[0.5rem] font-bold transition-all duration-200 cursor-default"
       >
         ?
       </button>
@@ -74,7 +74,7 @@ function RunScoreTooltip() {
       <div
         role="tooltip"
         aria-hidden={!open}
-        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-52 bg-[#0c0c0c] border border-white/8 rounded-xl p-4 z-50 shadow-2xl shadow-black pointer-events-none transition-all duration-200 ${
+        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-52 bg-[#0d0d0d] border border-white/8 rounded-2xl p-4 z-50 shadow-2xl shadow-black pointer-events-none transition-all duration-200 ${
           open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 invisible"
         }`}
       >
@@ -98,7 +98,7 @@ function RunScoreTooltip() {
             </div>
           ))}
         </div>
-        <div aria-hidden="true" className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#0c0c0c] border-r border-b border-white/8 rotate-45" />
+        <div aria-hidden="true" className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#0d0d0d] border-r border-b border-white/8 rotate-45" />
       </div>
     </div>
   );
@@ -106,21 +106,21 @@ function RunScoreTooltip() {
 
 function FeaturedScore({ score, scoreInfo, loading }) {
   return (
-    <div className="w-[29%] shrink-0 flex flex-col items-center justify-center py-7 px-5 text-center gap-2.5 relative">
+    <div className="w-[29%] shrink-0 flex flex-col items-center justify-center py-8 px-5 text-center gap-3 relative">
       {/* Faint ambient glow — overflow-hidden scoped here so tooltip can escape */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none rounded-l-2xl">
         {scoreInfo && (
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(ellipse at 50% 60%, ${scoreInfo.color}0d 0%, transparent 65%)`,
+              background: `radial-gradient(ellipse at 50% 60%, ${scoreInfo.color}12 0%, transparent 65%)`,
             }}
           />
         )}
       </div>
 
       <div className="flex items-center justify-center gap-1.5 relative">
-        <span className="font-dm text-[0.65rem] font-semibold tracking-[0.2em] text-white/50 uppercase">
+        <span className="font-dm text-[0.65rem] font-semibold tracking-[0.2em] text-white/45 uppercase">
           Run Score
         </span>
         <RunScoreTooltip />
@@ -156,9 +156,9 @@ function FeaturedScore({ score, scoreInfo, loading }) {
           </div>
 
           {scoreInfo && (
-            <div className="flex flex-col items-center gap-1 relative">
+            <div className="flex flex-col items-center gap-1.5 relative">
               <Badge label={scoreInfo.label} color={scoreInfo.color} />
-              <p className="font-dm text-[0.7rem] text-white/45 leading-snug">{scoreInfo.desc}</p>
+              <p className="font-dm text-[0.7rem] text-white/40 leading-snug">{scoreInfo.desc}</p>
             </div>
           )}
         </>
@@ -169,18 +169,18 @@ function FeaturedScore({ score, scoreInfo, loading }) {
 
 function MetricCol({ label, primary, badge, badgeColor, valueColor, sub, loading }) {
   return (
-    <dl className="flex-1 px-3.5 py-6 flex flex-col items-center justify-center text-center gap-1.5 min-w-0 relative">
-      {/* Per-status top accent tick */}
+    <dl className="flex-1 px-4 py-7 flex flex-col items-center justify-center text-center gap-1.5 min-w-0 relative">
+      {/* Per-status top accent dot */}
       {!loading && valueColor && (
         <div
           aria-hidden="true"
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-[1.5px] rounded-full"
-          style={{ background: valueColor, opacity: 0.45 }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full"
+          style={{ background: valueColor, opacity: 0.5 }}
         />
       )}
 
       <dt>
-        <span className="font-dm text-[0.65rem] font-semibold tracking-[0.18em] text-white/50 uppercase whitespace-nowrap">
+        <span className="font-dm text-[0.65rem] font-semibold tracking-[0.18em] text-white/40 uppercase whitespace-nowrap">
           {label}
         </span>
       </dt>
@@ -204,7 +204,7 @@ function MetricCol({ label, primary, badge, badgeColor, valueColor, sub, loading
           </dd>
           {badge && <dd><Badge label={badge} color={badgeColor} /></dd>}
           {sub && (
-            <dd className="font-dm text-[0.68rem] text-white/40 leading-snug w-full truncate mt-0.5">
+            <dd className="font-dm text-[0.68rem] text-white/38 leading-snug w-full truncate mt-0.5">
               {sub}
             </dd>
           )}
@@ -216,7 +216,7 @@ function MetricCol({ label, primary, badge, badgeColor, valueColor, sub, loading
 
 function IdleBody({ onOpen }) {
   return (
-    <div className="flex items-center gap-6 px-6 py-5">
+    <div className="flex items-center gap-5 px-6 py-5">
       {/* GPS rings */}
       <div
         aria-hidden="true"
@@ -238,9 +238,9 @@ function IdleBody({ onOpen }) {
         ))}
         <div
           className="relative w-5 h-5 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(175,242,40,0.07)", border: "1px solid rgba(175,242,40,0.18)" }}
+          style={{ background: "rgba(175,242,40,0.08)", border: "1px solid rgba(175,242,40,0.2)" }}
         >
-          <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="rgba(175,242,40,0.65)" aria-hidden="true">
+          <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="rgba(175,242,40,0.7)" aria-hidden="true">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
           </svg>
         </div>
@@ -248,7 +248,7 @@ function IdleBody({ onOpen }) {
 
       {/* Text */}
       <div className="flex-1 min-w-0">
-        <p className="font-syne font-semibold text-white/70 text-[0.875rem] leading-tight mb-0.5">
+        <p className="font-syne font-semibold text-white/75 text-[0.875rem] leading-tight mb-0.5 tracking-[-0.01em]">
           Real-time run conditions
         </p>
         <p className="font-dm text-xs text-white/30 leading-relaxed">
@@ -260,9 +260,9 @@ function IdleBody({ onOpen }) {
       <button
         type="button"
         onClick={onOpen}
-        className="shrink-0 flex items-center gap-1.5 bg-white/5 hover:bg-white/8 border border-white/10 hover:border-white/20 text-white/55 hover:text-white/85 font-dm text-xs font-semibold px-4 py-2.5 rounded-lg transition-all duration-200 whitespace-nowrap"
+        className="shrink-0 flex items-center gap-1.5 bg-[#aff228]/8 hover:bg-[#aff228]/15 border border-[#aff228]/20 hover:border-[#aff228]/40 text-[#aff228]/65 hover:text-[#aff228] font-dm text-xs font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap"
       >
-        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="rgba(175,242,40,0.7)" aria-hidden="true">
+        <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z" />
         </svg>
         Use my location
@@ -327,16 +327,14 @@ export function ApiStatusGrid() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#aff228] opacity-55" />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#aff228]" />
               </span>
-              <span className="font-dm text-[0.65rem] font-semibold tracking-[0.2em] text-white/55 uppercase">
+              <span className="font-dm text-[0.65rem] font-semibold tracking-[0.2em] text-white/45 uppercase">
                 Live Conditions
               </span>
               {locState === "granted" && aqiData?.station && (
-                <span className="font-dm text-[0.65rem] text-white/35">· {aqiData.station}</span>
+                <span className="font-dm text-[0.65rem] text-white/30">· {aqiData.station}</span>
               )}
             </div>
 
-            {/* Right: location status */}
-          
             {locState === "requesting" && (
               <span className="flex items-center gap-1.5 font-dm text-[0.65rem] text-white/35">
                 <span aria-hidden="true" className="inline-block w-2.5 h-2.5 border border-white/20 border-t-white/60 rounded-full animate-spin" />
@@ -347,7 +345,7 @@ export function ApiStatusGrid() {
               <span className="font-dm text-[0.65rem] text-red-400/55">Location blocked</span>
             )}
             {locState === "granted" && (
-              <span aria-hidden="true" className="font-dm text-[0.65rem] text-white/30 hidden sm:block">
+              <span aria-hidden="true" className="font-dm text-[0.65rem] text-white/25 hidden sm:block">
                 Updated just now
               </span>
             )}
@@ -389,7 +387,7 @@ export function ApiStatusGrid() {
                         className="w-0.5 self-stretch rounded-full shrink-0"
                         style={{ background: "rgba(175,242,40,0.4)", minHeight: "1em" }}
                       />
-                      <p className="font-dm text-[0.8125rem] text-white/65 leading-snug">{summary}</p>
+                      <p className="font-dm text-[0.8125rem] text-white/60 leading-snug">{summary}</p>
                     </div>
                   </div>
                   <div aria-hidden="true" className="h-px bg-white/5 mx-6" />
@@ -397,7 +395,7 @@ export function ApiStatusGrid() {
               )}
 
               {/* Metric columns */}
-              <div className="flex divide-x divide-white/4">
+              <div className="flex divide-x divide-white/5">
                 <FeaturedScore score={runScore} scoreInfo={scoreInfo} loading={loading} />
 
                 <MetricCol
