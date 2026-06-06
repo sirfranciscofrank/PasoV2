@@ -16,6 +16,16 @@ Runners can match by pace, location, time of day, and run type. Paso also helps 
 - **Tailwind CSS v4**
 - ESLint with React Hooks plugin
 
+## APIs
+
+| API | Provider | Used for |
+|-----|----------|----------|
+| **Air Quality (AQI)** | [WAQI](https://waqi.info/) | Real-time AQI, PM2.5, humidity by GPS coordinates |
+| **Weather** | [Open-Meteo](https://open-meteo.com/) | Temperature, feels-like, rain chance, wind speed, UV index, weather code |
+| **Geolocation** | Browser (`navigator.geolocation`) | User coordinates — requested on demand, never stored |
+
+> The **Run Score** (0–100) is computed client-side from the above data — no additional API required.
+
 ## Getting Started
 
 ```bash
