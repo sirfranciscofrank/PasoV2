@@ -149,17 +149,18 @@ function RunScoreTooltip() {
 
 function FeaturedScore({ score, scoreInfo, loading }) {
   return (
-    <div className="w-[29%] shrink-0 flex flex-col items-center justify-center py-7 px-5 text-center gap-2.5 relative overflow-hidden">
-      {/* Faint ambient glow */}
-      {scoreInfo && (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse at 50% 60%, ${scoreInfo.color}0d 0%, transparent 65%)`,
-          }}
-        />
-      )}
+    <div className="w-[29%] shrink-0 flex flex-col items-center justify-center py-7 px-5 text-center gap-2.5 relative">
+      {/* Faint ambient glow — overflow-hidden scoped here so tooltip can escape */}
+      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+        {scoreInfo && (
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `radial-gradient(ellipse at 50% 60%, ${scoreInfo.color}0d 0%, transparent 65%)`,
+            }}
+          />
+        )}
+      </div>
 
       <div className="flex items-center justify-center gap-1.5 relative">
         <span className="font-dm text-[0.65rem] font-semibold tracking-[0.2em] text-white/50 uppercase">
