@@ -1,29 +1,33 @@
 import { useState, useEffect } from "react";
-import { getLocation } from "./getLocation";
 
-const useWeather = () => {
+const useWeather = (coords) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!coords) return;
+
+    setLoading(true);
+    setData(null);
+    setError(null);
+
     const fetchWeather = async () => {
       try {
-        const { lat, lng } = await getLocation();
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,uv_index&timezone=Asia%2FBangkok`;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&current=temperature_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,uv_index&timezone=Asia%2FBangkok`;
         const res = await fetch(url);
         const json = await res.json();
 
         if (!json.current) throw new Error("Weather fetch failed");
 
-        const c = json.current;
+        const current = json.current;
         setData({
-          temp:        c.temperature_2m,
-          feelsLike:   c.apparent_temperature,
-          rainChance:  c.precipitation_probability,
-          weatherCode: c.weathercode,
-          windSpeed:   c.windspeed_10m,
-          uvIndex:     c.uv_index,
+          temp:        current.temperature_2m,
+          feelsLike:   current.apparent_temperature,
+          rainChance:  current.precipitation_probability,
+          weatherCode: current.weathercode,
+          windSpeed:   current.windspeed_10m,
+          uvIndex:     current.uv_index,
         });
       } catch (err) {
         setError(err.message);
@@ -33,7 +37,7 @@ const useWeather = () => {
     };
 
     fetchWeather();
-  }, []);
+  }, [coords?.lat, coords?.lng]);
 
   return { data, loading, error };
 };
