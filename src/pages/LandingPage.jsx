@@ -1,5 +1,5 @@
 import { Hero } from "../components/landing/Hero";
-import { ApiStatusGrid } from "../ui/ApiStatusGrid";
+import { ApiStatusGrid } from "../components/landing/ApiStatusGrid";
 import { RecommendedPark } from "../components/landing/RecommendedPark";
 
 export function LandingPage() {

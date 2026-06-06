@@ -1,8 +1,8 @@
 import { useState } from "react";
-import useAQI, { getAQIInfo, getTempInfo, getConditionsInfo, getUVInfo, getWeatherDesc } from "../hooks/getAQI";
-import useWeather from "../hooks/getWeather";
+import useAQI, { getAQIInfo, getTempInfo, getConditionsInfo, getUVInfo, getWeatherDesc } from "../../hooks/useAQI";
+import useWeather from "../../hooks/useWeather";
 import { LocationConsent } from "./LocationConsent";
-import { computeRunScore, getRunScoreInfo, buildSummary } from "../hooks/getRunScore";
+import { computeRunScore, getRunScoreInfo, buildSummary } from "../../utils/getRunScore";
 
 const SKL = "animate-pulse rounded-lg bg-white/[0.07] mx-auto";
 
