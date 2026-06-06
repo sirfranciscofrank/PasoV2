@@ -21,7 +21,7 @@ export function RecommendedPark() {
       ))}
 
       {/* Persistent dark overlay */}
-      <div className="absolute inset-0 bg-black/88 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/[0.88] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 py-16 md:py-24">
 
