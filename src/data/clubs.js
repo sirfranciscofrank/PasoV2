@@ -15,6 +15,11 @@ export const CLUBS = [
       { handle: "puntantav", igLink: "https://www.instagram.com/puntantav/" },
       { handle: "bbyblueboo_", igLink: "https://www.instagram.com/bbyblueboo_/" },
     ],
-    videoSrc: null, // add video URL here when ready
+    videoSrc: null,
+    videoSlots: [
+      { id: 1, label: "Weekly Run",  type: "Group run · every Friday" },
+      { id: 2, label: "Club Night",  type: "Social event · monthly" },
+      { id: 3, label: "FF Collab",   type: "Collab · special edition" },
+    ],
   },
 ];
