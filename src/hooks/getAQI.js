@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
-import { getLocation } from "./getLocation";
 
 const token = import.meta.env.VITE_WAQI_TOKEN;
 
-const useAQI = () => {
+const useAQI = (coords) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!coords) return;
+
+    setLoading(true);
+    setData(null);
+    setError(null);
+
     const fetchAQI = async () => {
       try {
-        const { lat, lng } = await getLocation();
         const res = await fetch(
-          `https://api.waqi.info/feed/geo:${lat};${lng}/?token=${token}`
+          `https://api.waqi.info/feed/geo:${coords.lat};${coords.lng}/?token=${token}`
         );
         const json = await res.json();
 
@@ -34,7 +38,7 @@ const useAQI = () => {
     };
 
     fetchAQI();
-  }, []);
+  }, [coords?.lat, coords?.lng]);
 
   return { data, loading, error };
 };
