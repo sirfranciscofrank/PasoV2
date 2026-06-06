@@ -1,10 +1,29 @@
+import { useState } from "react";
 import { PARKS } from "../../data/parks";
 import { ParkCard } from "../parks/ParkCard";
 
 export function RecommendedPark() {
+  const [hoveredId, setHoveredId] = useState(null);
+
   return (
-    <section aria-labelledby="picks-heading" className="w-full bg-black border-t border-white/6">
-      <div className="max-w-7xl mx-auto px-8 md:px-16 py-16 md:py-24">
+    <section aria-labelledby="picks-heading" className="relative overflow-hidden w-full bg-black border-t border-white/6">
+
+      {/* Park background images — fade between on hover */}
+      {PARKS.filter((p) => p.img).map((park) => (
+        <img
+          key={park.id}
+          src={park.img}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-out pointer-events-none select-none"
+          style={{ opacity: hoveredId === park.id ? 1 : 0 }}
+        />
+      ))}
+
+      {/* Persistent dark overlay */}
+      <div className="absolute inset-0 bg-black/88 pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 py-16 md:py-24">
 
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
@@ -36,12 +55,18 @@ export function RecommendedPark() {
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           {PARKS.map((park, index) => (
-            <ParkCard key={park.id} park={park} index={index} />
+            <ParkCard
+              key={park.id}
+              park={park}
+              index={index}
+              onMouseEnter={() => setHoveredId(park.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            />
           ))}
         </div>
 
         {/* CTA banner */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#aff228]/5 border border-[#aff228]/15 rounded-2xl px-7 py-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#aff228]/40 border border-[#aff228]/40 rounded-2xl px-7 py-6">
           <div>
             <p className="font-syne font-semibold text-white text-[1rem] mb-1 tracking-[-0.02em]">
               More Bangkok runs to explore
