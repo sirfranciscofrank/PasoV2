@@ -7,8 +7,8 @@ export const CLUBS = [
     area: "Bangkok",
     followers: "11.6K",
     upcomingEvents: [
-      "13/6 — FriendsFound x Lumi (open run)",
-      "20/6 — FriendsFound x Yunomori (limited spots)",
+      { date: "13/6", name: "FriendsFound x Lumi", type: "Open run" },
+      { date: "20/6", name: "FriendsFound x Yunomori", type: "Limited spots" },
     ],
     igLink: "https://www.instagram.com/friendsfound/",
     founders: [
